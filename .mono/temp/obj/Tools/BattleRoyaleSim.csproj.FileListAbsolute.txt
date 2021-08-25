@@ -1,0 +1,6 @@
+D:\GodotProjects\BattleRoyaleSim\.mono\temp\bin\Tools\BattleRoyaleSim.dll
+D:\GodotProjects\BattleRoyaleSim\.mono\temp\bin\Tools\BattleRoyaleSim.pdb
+D:\GodotProjects\BattleRoyaleSim\.mono\temp\obj\Tools\BattleRoyaleSim.csprojResolveAssemblyReference.cache
+D:\GodotProjects\BattleRoyaleSim\.mono\temp\obj\Tools\BattleRoyaleSim.csproj.CoreCompileInputs.cache
+D:\GodotProjects\BattleRoyaleSim\.mono\temp\obj\Tools\BattleRoyaleSim.dll
+D:\GodotProjects\BattleRoyaleSim\.mono\temp\obj\Tools\BattleRoyaleSim.pdb

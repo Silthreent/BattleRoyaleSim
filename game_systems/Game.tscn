@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://game_systems/Game.cs" type="Script" id=1]
+[ext_resource path="res://game_systems/map/Map.cs" type="Script" id=2]
+[ext_resource path="res://game_systems/map/MapLocale.tscn" type="PackedScene" id=3]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
@@ -37,5 +39,102 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Players" type="Node2D" parent="."]
+[node name="Map" type="Node2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="MapLocale" parent="Map" instance=ExtResource( 3 )]
+margin_left = 236.676
+margin_top = 93.5336
+margin_right = 268.676
+margin_bottom = 125.534
+columns = 2
+Connections = PoolIntArray( 2, 9 )
+
+[node name="MapLocale2" parent="Map" instance=ExtResource( 3 )]
+margin_left = 310.914
+margin_top = 228.569
+margin_right = 310.914
+margin_bottom = 228.569
+columns = 2
+Connections = PoolIntArray( 3, 9, 10 )
+
+[node name="MapLocale3" parent="Map" instance=ExtResource( 3 )]
+margin_left = 402.881
+margin_top = 396.99
+margin_right = 402.881
+margin_bottom = 396.99
+columns = 2
+Connections = PoolIntArray( 4, 10 )
+
+[node name="MapLocale4" parent="Map" instance=ExtResource( 3 )]
+margin_left = 587.922
+margin_top = 393.666
+margin_right = 587.922
+margin_bottom = 393.666
+columns = 2
+Connections = PoolIntArray( 10, 5, 3 )
+
+[node name="MapLocale5" parent="Map" instance=ExtResource( 3 )]
+margin_left = 826.15
+margin_top = 380.87
+margin_right = 858.15
+margin_bottom = 412.87
+columns = 2
+Connections = PoolIntArray( 4, 10, 6 )
+
+[node name="MapLocale6" parent="Map" instance=ExtResource( 3 )]
+margin_left = 855.209
+margin_top = 261.308
+margin_right = 887.209
+margin_bottom = 293.308
+columns = 2
+Connections = PoolIntArray( 5, 10, 8 )
+
+[node name="MapLocale7" parent="Map" instance=ExtResource( 3 )]
+margin_left = 889.057
+margin_top = 131.062
+margin_right = 921.057
+margin_bottom = 163.062
+columns = 2
+Connections = PoolIntArray( 8, 10, 6 )
+
+[node name="MapLocale8" parent="Map" instance=ExtResource( 3 )]
+margin_left = 739.395
+margin_top = 34.5572
+margin_right = 771.395
+margin_bottom = 66.5572
+columns = 2
+Connections = PoolIntArray( 9, 10, 7 )
+
+[node name="MapLocale9" parent="Map" instance=ExtResource( 3 )]
+margin_left = 516.179
+margin_top = 69.2481
+margin_right = 548.179
+margin_bottom = 101.248
+columns = 2
+Connections = PoolIntArray( 1, 10, 8 )
+
+[node name="MapLocale10" parent="Map" instance=ExtResource( 3 )]
+margin_left = 598.251
+margin_top = 206.41
+margin_right = 630.251
+margin_bottom = 238.41
+columns = 2
+Connections = PoolIntArray( 2, 3, 4, 5, 6, 7, 8, 9 )
+
+[node name="MapLocale11" parent="Map" instance=ExtResource( 3 )]
+margin_left = 509.251
+margin_top = 523.411
+margin_right = 541.251
+margin_bottom = 555.411
+columns = 2
+Connections = PoolIntArray( 3, 4 )
+
+[node name="MapLocale12" parent="Map" instance=ExtResource( 3 )]
+margin_left = 92.2505
+margin_top = 199.411
+margin_right = 124.251
+margin_bottom = 231.411
+columns = 2
+Connections = PoolIntArray( 1, 2 )
 [connection signal="pressed" from="UI/NextButton" to="." method="OnNextButtonPressed"]

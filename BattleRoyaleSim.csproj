@@ -43,12 +43,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GodotSharp">
-      <HintPath>$(ProjectDir)\.mono\assemblies\$(ApiConfiguration)\GodotSharp.dll</HintPath>
       <Private>False</Private>
+      <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharp.dll</HintPath>
     </Reference>
     <Reference Include="GodotSharpEditor" Condition=" '$(Configuration)' == 'Tools' ">
-      <HintPath>$(ProjectDir)\.mono\assemblies\$(ApiConfiguration)\GodotSharpEditor.dll</HintPath>
       <Private>False</Private>
+      <HintPath>$(ProjectDir)/.mono/assemblies/$(ApiConfiguration)/GodotSharpEditor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
@@ -56,6 +56,8 @@
     <Compile Include="game_systems\activity\BaseActivity.cs" />
     <Compile Include="game_systems\activity\KillActivity.cs" />
     <Compile Include="game_systems\Game.cs" />
+    <Compile Include="game_systems\map\Map.cs" />
+    <Compile Include="game_systems\map\MapLocale.cs" />
     <Compile Include="game_systems\player\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

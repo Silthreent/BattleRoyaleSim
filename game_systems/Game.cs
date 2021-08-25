@@ -6,9 +6,9 @@ public class Game : Node2D
 {
 	public static Random RNG;
 
-	List<Player> PlayerList;
+	PackedScene PlayerScene;
 
-	Node2D PlayersNode;
+	List<Player> PlayerList;
 
 	VBoxContainer PlayerScoreboard;
 
@@ -21,19 +21,19 @@ public class Game : Node2D
 	{
 		PlayerScoreboard = FindNode("PlayerList") as VBoxContainer;
 
-		PlayersNode = FindNode("Players") as Node2D;
+		PlayerScene = ResourceLoader.Load<PackedScene>("res://game_systems/player/Player.tscn");
 		PlayerList = new List<Player>();
-		int teamCount = 0;
+		int teamCount = 1;
 		int counter = 0;
 		for(int x = 0; x < 12; x++)
 		{
-			var plyr = new Player();
+			var plyr = PlayerScene.Instance() as Player;
 
-            plyr.SetPlayerName("Player " + (x + 1));
-			plyr.SetTeam(teamCount);
+			plyr.SetPlayerName("Player " + (x + 1));
 			plyr.Name = plyr.PlayerName;
+			plyr.SetTeam(teamCount);
+			plyr.MoveTo(Map.CurrentMap.GetLocale(teamCount - 1));
 
-			PlayersNode.AddChild(plyr);
 			PlayerList.Add(plyr);
 
 			var label = new Label();
@@ -42,7 +42,7 @@ public class Game : Node2D
 
 			counter++;
 			if(counter >= 2)
-            {
+			{
 				counter = 0;
 				teamCount++;
 			}
@@ -81,7 +81,7 @@ public class Game : Node2D
 		}
 
 		for(int x = 0; x < PlayerList.Count; x++)
-        {
+		{
 			if (PlayerList[x].Health >= 0)
 			{
 				var label = new Label();
@@ -98,11 +98,11 @@ public class Game : Node2D
 
 		Player winner = null;
 		foreach(var x in PlayerList)
-        {
+		{
 			if (winner == null)
 				winner = x;
 			else if (winner.Team != x.Team)
-            {
+			{
 				winner = null;
 				break;
 			}
@@ -113,12 +113,12 @@ public class Game : Node2D
 	}
 
 	void GameOver(Player player)
-    {
+	{
 		if (player != null)
-			GD.Print($"{player.PlayerName} WINS!!!!!!!");
+			GD.Print($"TEAM {player.Team} WINS!!!!!!!");
 		else
 			GD.Print("EVERYBODY DIED!! BETTER LUCK NEXT TIME!!!!");
-    }
+	}
 
 	void OnNextButtonPressed()
 	{

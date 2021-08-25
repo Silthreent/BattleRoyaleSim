@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://game_systems/map/MapLocale.cs" type="Script" id=1]
+
+[node name="MapLocale" type="GridContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="Panel" parent="."]
+visible = false
+margin_right = 32.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 32, 32 )

@@ -53,6 +53,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="game_systems\activity\BaseActivity.cs" />
+    <Compile Include="game_systems\activity\KillActivity.cs" />
     <Compile Include="game_systems\Game.cs" />
     <Compile Include="game_systems\player\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

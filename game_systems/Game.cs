@@ -62,7 +62,7 @@ public class Game : Node2D
 
 			var activity = chosenPlayer.ChooseActivity();
 
-			var involvedPlayers = activity.Process(chosenPlayer, PlayerList);
+			var involvedPlayers = activity.Process(chosenPlayer, chosenPlayer.CurrentLocale.GetLocalPlayers());
 			foreach(var plyr in involvedPlayers)
 			{
 				activePlayers.Remove(plyr);
@@ -90,8 +90,9 @@ public class Game : Node2D
 			}
 			else if (PlayerList[x].Health < 0)
 			{
-				PlayerList.RemoveAt(x);
+				PlayerList[x].CurrentLocale.RemovePlayer(PlayerList[x]);
 
+				PlayerList.RemoveAt(x);
 				x--;
 			}
 		}

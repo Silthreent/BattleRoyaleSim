@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="game_systems\activity\BaseActivity.cs" />
     <Compile Include="game_systems\activity\KillActivity.cs" />
+    <Compile Include="game_systems\activity\MoveActivity.cs" />
     <Compile Include="game_systems\Game.cs" />
     <Compile Include="game_systems\map\Map.cs" />
     <Compile Include="game_systems\map\MapLocale.cs" />

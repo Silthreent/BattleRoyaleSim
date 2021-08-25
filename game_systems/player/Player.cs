@@ -9,12 +9,18 @@ public class Player : Node2D
 
 	public BaseActivity ChooseActivity()
 	{
-		return new KillActivity();
+		if(CurrentLocale.GetLocalPlayers().FindAll(x => x.Team != Team).Count > 0)
+        {
+			return new KillActivity();
+        }
+
+		return new MoveActivity();
 	}
 
 	public void MoveTo(MapLocale locale)
 	{
 		Map.CurrentMap.MovePlayer(this, locale);
+		CurrentLocale = locale;
 	}
 
 	public void SetPlayerName(string name)

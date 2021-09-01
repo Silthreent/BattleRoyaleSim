@@ -2,6 +2,9 @@ using Godot;
 
 public class Player : Node2D
 {
+	[Signal]
+	public delegate void PlayerDied();
+
 	public string PlayerName { get; protected set; }
 	public int Team { get; protected set; }
 	public int Health { get; protected set; }
@@ -36,5 +39,10 @@ public class Player : Node2D
 	public void LoseHealth()
 	{
 		Health--;
+
+		if(Health <= 0)
+        {
+			EmitSignal("PlayerDied");
+        }
 	}
 }

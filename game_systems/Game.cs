@@ -19,6 +19,8 @@ public class Game : Node2D
 	GameState CurrentState;
 	List<Player> UnprocessedPlayers;
 
+	List<Player> DayDeathList;
+
 	public Game()
 	{
 		CurrentGame = this;
@@ -46,6 +48,7 @@ public class Game : Node2D
 			plyr.Name = plyr.PlayerName;
 			plyr.SetTeam(teamCount);
 			plyr.MoveTo(Map.CurrentMap.GetLocale(teamCount - 1));
+			plyr.Connect("PlayerDied", this, "OnPlayerDied", new Godot.Collections.Array() { plyr });
 
 			PlayerList.Add(plyr);
 
@@ -62,6 +65,7 @@ public class Game : Node2D
 		}
 
 		UnprocessedPlayers = new List<Player>(PlayerList);
+		DayDeathList = new List<Player>();
 	}
 
 	public void PostMessage(string message)
@@ -93,28 +97,22 @@ public class Game : Node2D
 
 	void PostProcessActivities()
 	{
-		foreach(Node x in PlayerScoreboard.GetChildren())
+		if(CurrentState == GameState.EndNight)
 		{
-			x.QueueFree();
-		}
-
-		for(int x = 0; x < PlayerList.Count; x++)
-		{
-			if (PlayerList[x].Health >= 0)
+			if(DayDeathList.Count > 0)
 			{
-				var label = new Label();
-				label.Text = PlayerList[x].PlayerName + " - Team " + PlayerList[x].Team;
-				PlayerScoreboard.AddChild(label);
+				foreach (var player in DayDeathList)
+				{
+					PostMessage($"{player.Name} perished.");
+				}
+				DayDeathList = new List<Player>();
 			}
-			else if (PlayerList[x].Health < 0)
+			else
 			{
-				PlayerList[x].CurrentLocale.RemovePlayer(PlayerList[x]);
-
-				PlayerList.RemoveAt(x);
-				x--;
+				PostMessage("No one died.");
 			}
 		}
-		 
+
 		Player winner = null;
 		foreach(var x in PlayerList)
 		{
@@ -139,6 +137,21 @@ public class Game : Node2D
 			GD.Print("EVERYBODY DIED!! BETTER LUCK NEXT TIME!!!!");
 	}
 
+	void UpdateScoreboard()
+	{
+		foreach (Node x in PlayerScoreboard.GetChildren())
+		{
+			x.QueueFree();
+		}
+
+		for (int x = 0; x < PlayerList.Count; x++)
+		{
+			var label = new Label();
+			label.Text = PlayerList[x].PlayerName + " - Team " + PlayerList[x].Team;
+			PlayerScoreboard.AddChild(label);
+		}
+	}
+
 	void OnNextButtonPressed()
 	{
 		switch(CurrentState)
@@ -151,10 +164,12 @@ public class Game : Node2D
 				break;
 
 			case GameState.EndDay:
+				PostMessage("----End of Day----");
 				PostProcessActivities();
 
 				UnprocessedPlayers = new List<Player>(PlayerList);
 				CurrentState = GameState.Night;
+				PostMessage("----Begin Night----");
 				break;
 
 			case GameState.Night:
@@ -165,12 +180,27 @@ public class Game : Node2D
 				break;
 
 			case GameState.EndNight:
+				PostMessage("----End of Night----");
 				PostProcessActivities();
 
 				UnprocessedPlayers = new List<Player>(PlayerList);
 				CurrentState = GameState.Day;
+				PostMessage("----Begin Day----");
 				break;
 		}
+	}
+
+	void OnPlayerDied(Player player)
+	{
+		player.CurrentLocale.RemovePlayer(player);
+		PlayerList.Remove(player);
+
+		if (UnprocessedPlayers.Contains(player))
+			UnprocessedPlayers.Remove(player);
+
+		UpdateScoreboard();
+
+		DayDeathList.Add(player);
 	}
 }
 

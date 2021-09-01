@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Game : Node2D
 {
+	public static Game CurrentGame { get; protected set; }
+
 	public static Random RNG;
 
 	PackedScene PlayerScene;
@@ -11,15 +13,26 @@ public class Game : Node2D
 	List<Player> PlayerList;
 
 	VBoxContainer PlayerScoreboard;
+	VBoxContainer MessageLog;
+	ScrollContainer MessageScroll;
+
+	GameState CurrentState;
+	List<Player> UnprocessedPlayers;
 
 	public Game()
 	{
+		CurrentGame = this;
+
 		RNG = new Random();
+
+		CurrentState = GameState.Day;
 	}
 
 	public override void _Ready()
 	{
 		PlayerScoreboard = FindNode("PlayerList") as VBoxContainer;
+		MessageScroll = FindNode("MessageScroll") as ScrollContainer;
+		MessageLog = MessageScroll.FindNode("MessageLog") as VBoxContainer;
 
 		PlayerScene = ResourceLoader.Load<PackedScene>("res://game_systems/player/Player.tscn");
 		PlayerList = new List<Player>();
@@ -47,33 +60,38 @@ public class Game : Node2D
 				teamCount++;
 			}
 		}
+
+		UnprocessedPlayers = new List<Player>(PlayerList);
 	}
 
-	void ProcessDay()
+	public void PostMessage(string message)
+	{
+		var label = new Label();
+		label.Text = message;
+		label.Autowrap = true;
+		MessageLog.AddChild(label);
+		MessageLog.MoveChild(label, 0);
+	}
+
+	void ProcessRandomActivity()
 	{
 		GD.Print("--Processing day--");
 
-		var activePlayers = new List<Player>(PlayerList);
-		while(activePlayers.Count > 0)
+		var chosenPlayer = UnprocessedPlayers[RNG.Next(0, UnprocessedPlayers.Count)];
+
+		GD.Print($"Doing Activity: {chosenPlayer.PlayerName}");
+
+		var activity = chosenPlayer.ChooseActivity();
+
+		var involvedPlayers = activity.Process(chosenPlayer, chosenPlayer.CurrentLocale.GetLocalPlayers());
+		foreach (var plyr in involvedPlayers)
 		{
-			var chosenPlayer = activePlayers[RNG.Next(0, activePlayers.Count)];
-
-			GD.Print($"Doing Activity: {chosenPlayer.PlayerName}");
-
-			var activity = chosenPlayer.ChooseActivity();
-
-			var involvedPlayers = activity.Process(chosenPlayer, chosenPlayer.CurrentLocale.GetLocalPlayers());
-			foreach(var plyr in involvedPlayers)
-			{
-				activePlayers.Remove(plyr);
-			}
-			activePlayers.Remove(chosenPlayer);
+			UnprocessedPlayers.Remove(plyr);
 		}
-
-		PostProcessDay();
+		UnprocessedPlayers.Remove(chosenPlayer);
 	}
 
-	void PostProcessDay()
+	void PostProcessActivities()
 	{
 		foreach(Node x in PlayerScoreboard.GetChildren())
 		{
@@ -96,7 +114,7 @@ public class Game : Node2D
 				x--;
 			}
 		}
-
+		 
 		Player winner = null;
 		foreach(var x in PlayerList)
 		{
@@ -123,6 +141,44 @@ public class Game : Node2D
 
 	void OnNextButtonPressed()
 	{
-		ProcessDay();
+		switch(CurrentState)
+		{
+			case GameState.Day:
+				ProcessRandomActivity();
+
+				if (UnprocessedPlayers.Count <= 0)
+					CurrentState = GameState.EndDay;
+				break;
+
+			case GameState.EndDay:
+				PostProcessActivities();
+
+				UnprocessedPlayers = new List<Player>(PlayerList);
+				CurrentState = GameState.Night;
+				break;
+
+			case GameState.Night:
+				ProcessRandomActivity();
+
+				if (UnprocessedPlayers.Count <= 0)
+					CurrentState = GameState.EndNight;
+				break;
+
+			case GameState.EndNight:
+				PostProcessActivities();
+
+				UnprocessedPlayers = new List<Player>(PlayerList);
+				CurrentState = GameState.Day;
+				break;
+		}
 	}
+}
+
+enum GameState
+{
+	Day,
+	EndDay,
+	Night,
+	EndNight,
+	GameOver
 }

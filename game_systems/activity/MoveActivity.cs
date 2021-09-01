@@ -7,6 +7,8 @@ public class MoveActivity : BaseActivity
         var currentLocale = host.CurrentLocale;
         host.MoveTo(currentLocale.ConnectedLocale[Game.RNG.Next(0, currentLocale.ConnectedLocale.Count)]);
 
+        Game.CurrentGame.PostMessage($"{host.Name} moved to {host.CurrentLocale.Name}");
+
         return new List<Player>();
     }
 }

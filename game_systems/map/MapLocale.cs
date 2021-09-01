@@ -11,10 +11,10 @@ public class MapLocale : GridContainer
 	List<Player> LocalPlayers;
 
 	public MapLocale()
-    {
+	{
 		ConnectedLocale = new List<MapLocale>();
 		LocalPlayers = new List<Player>();
-    }
+	}
 
 	public void AddPlayer(Player player)
 	{
@@ -43,7 +43,7 @@ public class MapLocale : GridContainer
 	}
 
 	public List<Player> GetLocalPlayers()
-    {
+	{
 		return new List<Player>(LocalPlayers);
-    }
+	}
 }

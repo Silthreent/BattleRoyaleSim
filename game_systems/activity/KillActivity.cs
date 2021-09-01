@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class KillActivity : BaseActivity
 {
+    // Player kills a non-teammate at the same locale
+
     public KillActivity()
     {
         R_MinEnemyPlayers = 1;

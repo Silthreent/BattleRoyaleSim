@@ -3,6 +3,8 @@ using System.Collections.Generic;
 [Activity]
 public class MoveActivity : BaseActivity
 {
+    // Player moves from one locale to another nearby one
+
     public override List<Player> Process(Player host, List<Player> interactable)
     {
         var currentLocale = host.CurrentLocale;

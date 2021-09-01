@@ -11,6 +11,7 @@ public class Map : Node2D
     {
         CurrentMap = this;
 
+        // Find every Locale placed on the map and load it into data
         MapLocales = new List<MapLocale>();
         foreach(var x in GetChildren())
         {

@@ -45,6 +45,7 @@ public class Player : Node2D
 		Team = team;
 	}
 
+	// TODO: Update to wound system
 	public void LoseHealth()
 	{
 		Health--;

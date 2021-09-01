@@ -3,6 +3,9 @@ using System.Collections.Generic;
 [Activity]
 public class AttackActivity : BaseActivity
 {
+    // Player attempts to damage a non-teammate at the same locale
+    // Can backfire, causing them to take damage instead
+
     public AttackActivity()
     {
         R_MinEnemyPlayers = 1;

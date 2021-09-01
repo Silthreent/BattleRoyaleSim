@@ -6,7 +6,7 @@ public class Game : Node2D
 {
 	public static Game CurrentGame { get; protected set; }
 
-	public static Random RNG;
+	public static Random RNG { get; protected set; }
 
 	PackedScene PlayerScene;
 
@@ -19,6 +19,7 @@ public class Game : Node2D
 	GameState CurrentState;
 	List<Player> UnprocessedPlayers;
 
+	// Which players died during the current day
 	List<Player> DayDeathList;
 
 	public Game()
@@ -36,8 +37,10 @@ public class Game : Node2D
 		MessageScroll = FindNode("MessageScroll") as ScrollContainer;
 		MessageLog = MessageScroll.FindNode("MessageLog") as VBoxContainer;
 
+		// Load every player
 		PlayerScene = ResourceLoader.Load<PackedScene>("res://game_systems/player/Player.tscn");
 		PlayerList = new List<Player>();
+
 		int teamCount = 1;
 		int counter = 0;
 		for(int x = 0; x < 12; x++)
@@ -52,10 +55,6 @@ public class Game : Node2D
 			plyr.Modulate = new Color((100 * (teamCount % 2)) / 255f, (100 * (teamCount % 3)) / 255f, (100 * (teamCount % 4)) / 255f);
 			PlayerList.Add(plyr);
 
-			var label = new Label();
-			label.Text = plyr.PlayerName + " - Team " + plyr.Team;
-			PlayerScoreboard.AddChild(label);
-
 			counter++;
 			if(counter >= 2)
 			{
@@ -64,10 +63,16 @@ public class Game : Node2D
 			}
 		}
 
+		UpdateScoreboard();
+
 		UnprocessedPlayers = new List<Player>(PlayerList);
 		DayDeathList = new List<Player>();
 	}
 
+	/// <summary>
+	/// Load a message into the message log.
+	/// </summary>
+	/// <param name="message">The message to post in the log.</param>
 	public void PostMessage(string message)
 	{
 		var label = new Label();
@@ -77,6 +82,7 @@ public class Game : Node2D
 		MessageLog.MoveChild(label, 0);
 	}
 
+	// Pick a random adventurer who hasn't done anything today, and have them do something
 	void ProcessRandomActivity()
 	{
 		GD.Print("--Processing day--");
@@ -87,6 +93,7 @@ public class Game : Node2D
 
 		var activity = chosenPlayer.ChooseActivity();
 
+		// Any players related to the activity done also can't do anything today
 		var involvedPlayers = activity.Process(chosenPlayer, chosenPlayer.CurrentLocale.GetLocalPlayers());
 		foreach (var plyr in involvedPlayers)
 		{
@@ -95,8 +102,10 @@ public class Game : Node2D
 		UnprocessedPlayers.Remove(chosenPlayer);
 	}
 
+	// End of day/night checks
 	void PostProcessActivities()
 	{
+		// Night ends, post the name of everyone who died
 		if(CurrentState == GameState.EndNight)
 		{
 			if(DayDeathList.Count > 0)
@@ -113,6 +122,7 @@ public class Game : Node2D
 			}
 		}
 
+		// Check if the game is over, if it is declare a winner
 		Player winner = null;
 		foreach(var x in PlayerList)
 		{
@@ -132,12 +142,12 @@ public class Game : Node2D
 	void GameOver(Player player)
 	{
 		if (player != null)
-        {
+		{
 			GD.Print($"TEAM {player.Team} WINS!!!!!!!");
 			PostMessage($"-----TEAM {player.Team} WINS-----");
 		}
 		else
-        {
+		{
 			GD.Print("EVERYBODY DIED!! BETTER LUCK NEXT TIME!!!!");
 			PostMessage($"-----NOBODY WINS-----");
 		}
@@ -162,8 +172,11 @@ public class Game : Node2D
 
 	void OnNextButtonPressed()
 	{
+		// The important button has been pressed, do something based on game state
 		switch(CurrentState)
 		{
+			// On Day & Night, process an adventurer
+			// Then check if any are left to process
 			case GameState.Day:
 				ProcessRandomActivity();
 
@@ -171,13 +184,14 @@ public class Game : Node2D
 					CurrentState = GameState.EndDay;
 				break;
 
+			// On End Day & End Night, process end of and then check if game is over
 			case GameState.EndDay:
 				PostMessage("----End of Day----");
 
 				PostProcessActivities();
 
 				if(CurrentState != GameState.GameOver)
-                {
+				{
 					CurrentState = GameState.Night;
 
 					UnprocessedPlayers = new List<Player>(PlayerList);
@@ -185,6 +199,7 @@ public class Game : Node2D
 				}
 				break;
 
+			// See comment at day
 			case GameState.Night:
 				ProcessRandomActivity();
 
@@ -192,13 +207,14 @@ public class Game : Node2D
 					CurrentState = GameState.EndNight;
 				break;
 
+			// See comment at endday
 			case GameState.EndNight:
 				PostMessage("----End of Night----");
 
 				PostProcessActivities();
 
 				if(CurrentState != GameState.GameOver)
-                {
+				{
 					CurrentState = GameState.Day;
 
 					UnprocessedPlayers = new List<Player>(PlayerList);
@@ -208,6 +224,7 @@ public class Game : Node2D
 		}
 	}
 
+	// A player died, so remove them from their location, the active list, just everywhere
 	void OnPlayerDied(Player player)
 	{
 		player.CurrentLocale.RemovePlayer(player);

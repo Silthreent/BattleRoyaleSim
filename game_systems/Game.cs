@@ -49,7 +49,7 @@ public class Game : Node2D
 			plyr.SetTeam(teamCount);
 			plyr.MoveTo(Map.CurrentMap.GetLocale(teamCount - 1));
 			plyr.Connect("PlayerDied", this, "OnPlayerDied", new Godot.Collections.Array() { plyr });
-
+			plyr.Modulate = new Color((100 * (teamCount % 2)) / 255f, (100 * (teamCount % 3)) / 255f, (100 * (teamCount % 4)) / 255f);
 			PlayerList.Add(plyr);
 
 			var label = new Label();
@@ -132,9 +132,17 @@ public class Game : Node2D
 	void GameOver(Player player)
 	{
 		if (player != null)
+        {
 			GD.Print($"TEAM {player.Team} WINS!!!!!!!");
+			PostMessage($"-----TEAM {player.Team} WINS-----");
+		}
 		else
+        {
 			GD.Print("EVERYBODY DIED!! BETTER LUCK NEXT TIME!!!!");
+			PostMessage($"-----NOBODY WINS-----");
+		}
+
+		CurrentState = GameState.GameOver;
 	}
 
 	void UpdateScoreboard()
@@ -165,11 +173,16 @@ public class Game : Node2D
 
 			case GameState.EndDay:
 				PostMessage("----End of Day----");
+
 				PostProcessActivities();
 
-				UnprocessedPlayers = new List<Player>(PlayerList);
-				CurrentState = GameState.Night;
-				PostMessage("----Begin Night----");
+				if(CurrentState != GameState.GameOver)
+                {
+					CurrentState = GameState.Night;
+
+					UnprocessedPlayers = new List<Player>(PlayerList);
+					PostMessage("----Begin Night----");
+				}
 				break;
 
 			case GameState.Night:
@@ -181,11 +194,16 @@ public class Game : Node2D
 
 			case GameState.EndNight:
 				PostMessage("----End of Night----");
+
 				PostProcessActivities();
 
-				UnprocessedPlayers = new List<Player>(PlayerList);
-				CurrentState = GameState.Day;
-				PostMessage("----Begin Day----");
+				if(CurrentState != GameState.GameOver)
+                {
+					CurrentState = GameState.Day;
+
+					UnprocessedPlayers = new List<Player>(PlayerList);
+					PostMessage("----Begin Day----");
+				}
 				break;
 		}
 	}

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 
+[Activity]
 public class MoveActivity : BaseActivity
 {
     public override List<Player> Process(Player host, List<Player> interactable)

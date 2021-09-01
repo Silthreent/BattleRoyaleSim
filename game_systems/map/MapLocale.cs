@@ -26,6 +26,7 @@ public class MapLocale : GridContainer
 
 		control.AddChild(player);
 		player.Position = new Vector2(0, 0);
+		control.RectMinSize = player.GetSpriteSize();
 
 		LocalPlayers.Add(player);
 	}
@@ -46,4 +47,9 @@ public class MapLocale : GridContainer
 	{
 		return new List<Player>(LocalPlayers);
 	}
+
+	public int GetLocalPlayerCount()
+    {
+		return LocalPlayers.Count;
+    }
 }

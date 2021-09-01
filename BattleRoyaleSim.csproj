@@ -53,6 +53,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="game_systems\activity\ActivityList.cs" />
+    <Compile Include="game_systems\activity\aggressive\AttackActivity.cs" />
     <Compile Include="game_systems\activity\BaseActivity.cs" />
     <Compile Include="game_systems\activity\KillActivity.cs" />
     <Compile Include="game_systems\activity\MoveActivity.cs" />

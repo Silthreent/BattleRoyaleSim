@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 
 [Activity("tree")]
-public class FallFromTreeActivity : BaseActivity
+public class ClimbDownTreeActivity : BaseActivity
 {
-    // Fall out of the tree and die
-
     public override bool CanProcess(Player host)
     {
         return host.HasEffect(typeof(InTreeEffect));
@@ -12,10 +10,10 @@ public class FallFromTreeActivity : BaseActivity
 
     public override List<Player> Process(Player host)
     {
-        host.LoseHealth();
+        host.LoseEffect(typeof(InTreeEffect));
 
-        PostMessage($"{host.PlayerName} fell out of the tree and died.");
+        PostMessage($"{host.PlayerName} climbed down from the tree.");
 
-        return base.Process(host);
+        return new List<Player>();
     }
 }

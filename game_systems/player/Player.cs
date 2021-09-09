@@ -86,6 +86,13 @@ public class Player : Node2D
 		effect.Host = this;
 	}
 
+	public void LoseEffect(Type eType)
+    {
+		var effect = Effects.Find(x => x.GetType() == eType);
+		if (effect != null)
+			Effects.Remove(effect);
+    }
+
 	public bool HasEffect(Type effectType)
 	{
 		return Effects.Find(x => x.GetType() == effectType) != null;

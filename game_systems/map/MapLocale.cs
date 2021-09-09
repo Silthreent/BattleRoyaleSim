@@ -103,4 +103,18 @@ public class MapLocale : GridContainer
 	{
 		return Effects.Find(x => x.GetType() == effectType) != null;
 	}
+
+	public void ProcessTimeChange()
+	{
+		int count = Effects.Count;
+		for (int x = 0; x < Effects.Count; x++)
+		{
+			Effects[x].TickEffect();
+
+			if (Effects.Count < count)
+				x -= count - Effects.Count;
+
+			count = Effects.Count;
+		}
+	}
 }

@@ -40,4 +40,9 @@ public class Map : Node2D
     {
         return MapLocales[index];
     }
+
+    public MapLocale[] GetLocales()
+    {
+        return MapLocales.ToArray();
+    }
 }

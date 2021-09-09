@@ -63,11 +63,14 @@
     <Compile Include="game_systems\activity\NoOptionActivity.cs" />
     <Compile Include="game_systems\activity\passive\ClimbDownTreeActivity.cs" />
     <Compile Include="game_systems\activity\passive\ClimbTreeActivity.cs" />
+    <Compile Include="game_systems\activity\passive\CreateCampfireActivity.cs" />
     <Compile Include="game_systems\activity\passive\FallFromTreeActivity.cs" />
+    <Compile Include="game_systems\activity\passive\SitAtCampfireEffect.cs" />
     <Compile Include="game_systems\Game.cs" />
     <Compile Include="game_systems\map\Map.cs" />
     <Compile Include="game_systems\map\MapLocale.cs" />
     <Compile Include="game_systems\player\effect\BaseEffect.cs" />
+    <Compile Include="game_systems\player\effect\CampfireEffect.cs" />
     <Compile Include="game_systems\player\effect\DoinOpenerEffect.cs" />
     <Compile Include="game_systems\player\effect\InTreeEffect.cs" />
     <Compile Include="game_systems\player\effect\LootboxEffect.cs" />

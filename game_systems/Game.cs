@@ -7,6 +7,7 @@ public class Game : Node2D
 	public static Game CurrentGame { get; protected set; }
 
 	public static Random RNG { get; protected set; }
+	public GameState CurrentState { get; protected set; }
 
 	PackedScene PlayerScene;
 
@@ -16,7 +17,6 @@ public class Game : Node2D
 	VBoxContainer MessageLog;
 	ScrollContainer MessageScroll;
 
-	GameState CurrentState;
 	List<Player> UnprocessedPlayers;
 
 	// Which players died during the current day
@@ -196,6 +196,11 @@ public class Game : Node2D
 					x.ProcessTimeChange();
                 }
 
+				foreach (var x in Map.CurrentMap.GetLocales())
+				{
+					x.ProcessTimeChange();
+				}
+
 				PostProcessActivities();
 
 				if(CurrentState != GameState.GameOver)
@@ -220,6 +225,11 @@ public class Game : Node2D
 				PostMessage("----End of Night----");
 
 				foreach (var x in PlayerList)
+				{
+					x.ProcessTimeChange();
+				}
+
+				foreach (var x in Map.CurrentMap.GetLocales())
 				{
 					x.ProcessTimeChange();
 				}
@@ -252,7 +262,7 @@ public class Game : Node2D
 	}
 }
 
-enum GameState
+public enum GameState
 {
 	Day,
 	EndDay,

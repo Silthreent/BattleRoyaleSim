@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-[Activity]
+[Activity("opener")]
 public class AttackActivity : BaseActivity
 {
     // Player attempts to damage a non-teammate at the same locale

@@ -26,6 +26,20 @@ public class Player : Node2D
 		Sprite = GetNode<Sprite>("Sprite");
 	}
 
+	public void ProcessTimeChange()
+    {
+		int count = Effects.Count;
+		for (int x = 0; x < Effects.Count; x++)
+		{
+			Effects[x].TickEffect();
+
+			if (Effects.Count < count)
+				x -= count - Effects.Count;
+
+			count = Effects.Count;
+		}
+	}
+
 	public BaseActivity ChooseActivity()
 	{
 		var possibles = ActivityList.GetPossibleActivities(this);
@@ -44,6 +58,11 @@ public class Player : Node2D
 				count = possibles.Count;
 			}
 		}
+
+		CurrentLocale.ModifyActivityList(possibles);
+
+		if (possibles.Count <= 0)
+			return new NoOptionActivity();
 
 		return possibles[Game.RNG.Next(0, possibles.Count)];
 	}

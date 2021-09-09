@@ -50,9 +50,10 @@ public class Game : Node2D
 			plyr.SetPlayerName("Player " + (x + 1));
 			plyr.Name = plyr.PlayerName;
 			plyr.SetTeam(teamCount);
-			plyr.MoveTo(Map.CurrentMap.GetLocale(teamCount - 1));
+			plyr.MoveTo(Map.CurrentMap.GetLocale(9));
 			plyr.Connect("PlayerDied", this, "OnPlayerDied", new Godot.Collections.Array() { plyr });
 			plyr.Modulate = new Color((100 * (teamCount % 2)) / 255f, (100 * (teamCount % 3)) / 255f, (100 * (teamCount % 4)) / 255f);
+			plyr.GiveEffect(new DoinOpenerEffect());
 			PlayerList.Add(plyr);
 
 			counter++;
@@ -67,6 +68,8 @@ public class Game : Node2D
 
 		UnprocessedPlayers = new List<Player>(PlayerList);
 		DayDeathList = new List<Player>();
+
+		Map.CurrentMap.GetLocale(9).GiveEffect(new LootboxEffect());
 	}
 
 	/// <summary>
@@ -188,6 +191,11 @@ public class Game : Node2D
 			case GameState.EndDay:
 				PostMessage("----End of Day----");
 
+				foreach(var x in PlayerList)
+                {
+					x.ProcessTimeChange();
+                }
+
 				PostProcessActivities();
 
 				if(CurrentState != GameState.GameOver)
@@ -210,6 +218,11 @@ public class Game : Node2D
 			// See comment at endday
 			case GameState.EndNight:
 				PostMessage("----End of Night----");
+
+				foreach (var x in PlayerList)
+				{
+					x.ProcessTimeChange();
+				}
 
 				PostProcessActivities();
 

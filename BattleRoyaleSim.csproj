@@ -57,7 +57,10 @@
     <Compile Include="game_systems\activity\aggressive\AttackActivity.cs" />
     <Compile Include="game_systems\activity\BaseActivity.cs" />
     <Compile Include="game_systems\activity\KillActivity.cs" />
+    <Compile Include="game_systems\activity\lootbox\LootLootboxActivity.cs" />
+    <Compile Include="game_systems\activity\lootbox\RunFromLootboxActivity.cs" />
     <Compile Include="game_systems\activity\MoveActivity.cs" />
+    <Compile Include="game_systems\activity\NoOptionActivity.cs" />
     <Compile Include="game_systems\activity\passive\ClimbDownTreeActivity.cs" />
     <Compile Include="game_systems\activity\passive\ClimbTreeActivity.cs" />
     <Compile Include="game_systems\activity\passive\FallFromTreeActivity.cs" />
@@ -65,7 +68,9 @@
     <Compile Include="game_systems\map\Map.cs" />
     <Compile Include="game_systems\map\MapLocale.cs" />
     <Compile Include="game_systems\player\effect\BaseEffect.cs" />
+    <Compile Include="game_systems\player\effect\DoinOpenerEffect.cs" />
     <Compile Include="game_systems\player\effect\InTreeEffect.cs" />
+    <Compile Include="game_systems\player\effect\LootboxEffect.cs" />
     <Compile Include="game_systems\player\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 public class MapLocale : GridContainer
@@ -10,10 +11,14 @@ public class MapLocale : GridContainer
 
 	List<Player> LocalPlayers;
 
+	List<BaseEffect> Effects;
+
 	public MapLocale()
 	{
 		ConnectedLocale = new List<MapLocale>();
 		LocalPlayers = new List<Player>();
+
+		Effects = new List<BaseEffect>();
 	}
 
 	/// <summary>
@@ -63,4 +68,39 @@ public class MapLocale : GridContainer
     {
 		return LocalPlayers.Count;
     }
+
+	public void ModifyActivityList(List<BaseActivity> possibles)
+    {
+		int count = possibles.Count;
+		for (int x = 0; x < possibles.Count; x++)
+		{
+			foreach (var effect in Effects)
+			{
+				if (!effect.CanDoActivity(possibles[x]))
+					possibles.RemoveAt(x);
+
+				if (possibles.Count < count)
+					x -= count - possibles.Count;
+
+				count = possibles.Count;
+			}
+		}
+	}
+
+	public void GiveEffect(BaseEffect effect)
+	{
+		Effects.Add(effect);
+	}
+
+	public void LoseEffect(Type eType)
+	{
+		var effect = Effects.Find(x => x.GetType() == eType);
+		if (effect != null)
+			Effects.Remove(effect);
+	}
+
+	public bool HasEffect(Type effectType)
+	{
+		return Effects.Find(x => x.GetType() == effectType) != null;
+	}
 }

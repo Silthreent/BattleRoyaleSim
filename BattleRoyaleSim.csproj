@@ -58,9 +58,13 @@
     <Compile Include="game_systems\activity\BaseActivity.cs" />
     <Compile Include="game_systems\activity\KillActivity.cs" />
     <Compile Include="game_systems\activity\MoveActivity.cs" />
+    <Compile Include="game_systems\activity\passive\ClimbTreeActivity.cs" />
+    <Compile Include="game_systems\activity\passive\FallFromTreeActivity.cs" />
     <Compile Include="game_systems\Game.cs" />
     <Compile Include="game_systems\map\Map.cs" />
     <Compile Include="game_systems\map\MapLocale.cs" />
+    <Compile Include="game_systems\player\effect\BaseEffect.cs" />
+    <Compile Include="game_systems\player\effect\InTreeEffect.cs" />
     <Compile Include="game_systems\player\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

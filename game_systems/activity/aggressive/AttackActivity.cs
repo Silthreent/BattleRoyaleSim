@@ -6,14 +6,14 @@ public class AttackActivity : BaseActivity
     // Player attempts to damage a non-teammate at the same locale
     // Can backfire, causing them to take damage instead
 
-    public AttackActivity()
+    public override bool CanProcess(Player host)
     {
-        R_MinEnemyPlayers = 1;
+        return HasNearbyEnemies(host, 1);
     }
 
-    public override List<Player> Process(Player host, List<Player> interactable)
+    public override List<Player> Process(Player host)
     {
-        var alive = interactable.FindAll(x => x.Health >= 0 && x != host && x.Team != host.Team);
+        var alive = host.CurrentLocale.GetLocalPlayers().FindAll(x => x.Health >= 0 && x != host && x.Team != host.Team);
         if (alive.Count <= 0)
         {
             Game.CurrentGame.PostMessage($"{host.Name} was blood thirsty, but couldn't find anyone.");
@@ -37,6 +37,6 @@ public class AttackActivity : BaseActivity
             host.LoseHealth();
         }
 
-        return base.Process(host, interactable);
+        return new List<Player>() { sacrifice };
     }
 }

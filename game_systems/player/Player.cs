@@ -1,4 +1,6 @@
 using Godot;
+using System;
+using System.Collections.Generic;
 
 public class Player : Node2D
 {
@@ -12,6 +14,13 @@ public class Player : Node2D
 
 	Sprite Sprite;
 
+	List<BaseEffect> Effects;
+
+	public Player()
+	{
+		Effects = new List<BaseEffect>();
+	}
+
 	public override void _Ready()
 	{
 		Sprite = GetNode<Sprite>("Sprite");
@@ -21,7 +30,22 @@ public class Player : Node2D
 	{
 		var possibles = ActivityList.GetPossibleActivities(this);
 
-		return possibles[Game.RNG.Next(0, possibles.Length)];
+		int count = possibles.Count;
+		for(int x = 0; x < possibles.Count; x++)
+        {
+			foreach (var effect in Effects)
+			{
+				if (!effect.CanDoActivity(possibles[x]))
+					possibles.RemoveAt(x);
+
+				if(possibles.Count < count)
+					x -= count - possibles.Count;
+
+				count = possibles.Count;
+			}
+		}
+
+		return possibles[Game.RNG.Next(0, possibles.Count)];
 	}
 
 	public void MoveTo(MapLocale locale)
@@ -54,6 +78,17 @@ public class Player : Node2D
 		{
 			EmitSignal("PlayerDied");
 		}
+	}
+
+	public void GiveEffect(BaseEffect effect)
+	{
+		Effects.Add(effect);
+		effect.Host = this;
+	}
+
+	public bool HasEffect(Type effectType)
+	{
+		return Effects.Find(x => x.GetType() == effectType) != null;
 	}
 
 	public Vector2 GetSpriteSize()

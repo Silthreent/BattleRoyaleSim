@@ -5,17 +5,17 @@ public class KillActivity : BaseActivity
 {
     // Player kills a non-teammate at the same locale
 
-    public KillActivity()
+    public override bool CanProcess(Player host)
     {
-        R_MinEnemyPlayers = 1;
+        return HasNearbyEnemies(host, 1);
     }
 
-    public override List<Player> Process(Player host, List<Player> interactable)
+    public override List<Player> Process(Player host)
     {
-        var alive = interactable.FindAll(x => x.Health >= 0 && x != host && x.Team != host.Team);
+        var alive = host.CurrentLocale.GetLocalPlayers().FindAll(x => x.Team != host.Team);
         if(alive.Count <= 0)
         {
-            Game.CurrentGame.PostMessage($"{host.Name} was blood thirsty, but couldn't find anyone.");
+            PostMessage($"{host.Name} was blood thirsty, but couldn't find anyone.");
 
             return new List<Player>();
         }
@@ -23,7 +23,7 @@ public class KillActivity : BaseActivity
         var sacrifice = alive[Game.RNG.Next(0, alive.Count)];
         sacrifice.LoseHealth();
 
-        Game.CurrentGame.PostMessage($"{host.Name} killed {sacrifice.Name}");
+        PostMessage($"{host.Name} killed {sacrifice.Name}");
 
         GD.Print($"Killing {sacrifice.PlayerName}");
 

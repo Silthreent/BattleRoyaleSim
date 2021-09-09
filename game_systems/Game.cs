@@ -94,7 +94,7 @@ public class Game : Node2D
 		var activity = chosenPlayer.ChooseActivity();
 
 		// Any players related to the activity done also can't do anything today
-		var involvedPlayers = activity.Process(chosenPlayer, chosenPlayer.CurrentLocale.GetLocalPlayers());
+		var involvedPlayers = activity.Process(chosenPlayer);
 		foreach (var plyr in involvedPlayers)
 		{
 			UnprocessedPlayers.Remove(plyr);

@@ -28,13 +28,10 @@ public static class ActivityList
     /// </summary>
     /// <param name="player">Player that wants to do an activity</param>
     /// <returns>All possible activities.</returns>
-    public static BaseActivity[] GetPossibleActivities(Player player)
+    public static List<BaseActivity> GetPossibleActivities(Player player)
     {
-        var localePlayers = player.CurrentLocale.GetLocalPlayers();
-        var enemyPlayers = localePlayers.Where(x => x.Team != player.Team);
-
         return Activities
-            .Where(x => x.R_MinEnemyPlayers <= enemyPlayers.Count() && x.R_MaxEnemyPlayers >= enemyPlayers.Count())
-            .ToArray();
+            .Where(x => x.CanProcess(player))
+            .ToList();
     }
 }

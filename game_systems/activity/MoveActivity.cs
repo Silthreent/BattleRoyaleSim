@@ -5,12 +5,17 @@ public class MoveActivity : BaseActivity
 {
     // Player moves from one locale to another nearby one
 
-    public override List<Player> Process(Player host, List<Player> interactable)
+    public override bool CanProcess(Player host)
+    {
+        return true;
+    }
+
+    public override List<Player> Process(Player host)
     {
         var currentLocale = host.CurrentLocale;
         host.MoveTo(currentLocale.ConnectedLocale[Game.RNG.Next(0, currentLocale.ConnectedLocale.Count)]);
 
-        Game.CurrentGame.PostMessage($"{host.Name} moved to {host.CurrentLocale.Name}");
+        PostMessage($"{host.Name} moved to {host.CurrentLocale.Name}");
 
         return new List<Player>();
     }

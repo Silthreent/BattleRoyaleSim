@@ -5,6 +5,11 @@ public abstract class BaseActivity
 {
     public abstract bool CanProcess(Player host);
 
+    /// <summary>
+    /// Process the activity doing everything it says to.
+    /// </summary>
+    /// <param name="host">The player doing the activity</param>
+    /// <returns>Which players were involved</returns>
     public virtual List<Player> Process(Player host)
     {
         return new List<Player>();

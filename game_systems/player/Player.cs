@@ -51,7 +51,17 @@ public class Player : Node2D
 
 	public int RollAttack()
 	{
-		return Game.RNG.Next(0, 1000);
+		var attackRoll = Game.RNG.Next(0, 1000);
+
+		var modifier = 0;
+		Entity.ProcessOnInventory(x => { modifier += x.ModifyAttackRoll(attackRoll); });
+
+		GD.Print($"{PlayerName} rolling for attack");
+		GD.Print($"Attack roll: {attackRoll}");
+		GD.Print($"Modifier: {modifier}");
+		GD.Print($"Total: {attackRoll + modifier}");
+
+		return attackRoll + modifier;
 	}
 
 	public void SetPlayerName(string name)

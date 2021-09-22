@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class Game : Node2D
 {
 	public static Game CurrentGame { get; protected set; }
-
 	public static Random RNG { get; protected set; }
+
 	public GameState CurrentState { get; protected set; }
 
 	PackedScene PlayerScene;

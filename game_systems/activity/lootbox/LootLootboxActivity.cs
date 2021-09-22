@@ -13,7 +13,17 @@ public class LootLootboxActivity : BaseActivity
 
     public override List<Player> Process(Player host)
     {
-        PostMessage($"{host.PlayerName} tried to loot The Lootbox but that isn't implemented yet...");
+        var item = host.CurrentLocale.Entity.GetEffect<LootboxEffect>().GrabItem();
+
+        if(item != null)
+        {
+            host.Entity.GiveItem(item);
+            PostMessage($"{host.PlayerName} grabbed a {item.Name} from The Lootbox!");
+        }
+        else
+        {
+            PostMessage($"{host.PlayerName} tried to loot The Lootbox, but found it empty...");
+        }
 
         return base.Process(host);
     }

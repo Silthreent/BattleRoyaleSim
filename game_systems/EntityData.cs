@@ -9,10 +9,10 @@ public class EntityData
 	public MapLocale HostLocale { get; protected set; }
 
 	public EntityData()
-    {
+	{
 		Effects = new List<BaseEffect>();
 		Inventory = new List<BaseItem>();
-    }
+	}
 
 	public void GiveEffect(BaseEffect effect)
 	{
@@ -31,6 +31,25 @@ public class EntityData
 		return Effects.Find(x => x.GetType() == effectType) != null;
 	}
 
+	public void ProcessOnEffects(Action<BaseEffect> process)
+    {
+		int count = Effects.Count;
+		for (int x = 0; x < Effects.Count; x++)
+		{
+			process.Invoke(Effects[x]);
+
+			if (Effects.Count < count)
+				x -= count - Effects.Count;
+
+			count = Effects.Count;
+		}
+	}
+
+	public T GetEffect<T>() where T : BaseEffect
+	{
+		return (T)Effects.Find(x => x.GetType() == typeof(T));
+	}
+
 	public void GiveItem(BaseItem item)
 	{
 		Inventory.Add(item);
@@ -39,6 +58,20 @@ public class EntityData
 	public void LoseItem(BaseItem item)
 	{
 		Inventory.Remove(item);
+	}
+
+	public void ProcessOnInventory(Action<BaseItem> process)
+	{
+		int count = Inventory.Count;
+		for (int x = 0; x < Inventory.Count; x++)
+		{
+			process.Invoke(Inventory[x]);
+
+			if (Inventory.Count < count)
+				x -= count - Inventory.Count;
+
+			count = Inventory.Count;
+		}
 	}
 
 	public void ModifyActivityList(List<BaseActivity> possibles)

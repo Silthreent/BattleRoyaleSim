@@ -5,8 +5,8 @@ public class DoinOpenerEffect : BaseEffect
         return CheckForTag(activity, "opener");
     }
 
-    public override void TickEffect()
+    public override void TickEffect(EntityData entity)
     {
-        Host.LoseEffect(this.GetType());
+        entity.LoseEffect(GetType());
     }
 }

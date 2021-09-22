@@ -7,7 +7,7 @@ public class FallFromTreeActivity : BaseActivity
 
     public override bool CanProcess(Player host)
     {
-        return host.HasEffect(typeof(InTreeEffect));
+        return host.Entity.HasEffect(typeof(InTreeEffect));
     }
 
     public override List<Player> Process(Player host)

@@ -12,7 +12,7 @@ public class ClimbTreeActivity : BaseActivity
 
     public override List<Player> Process(Player host)
     {
-        host.GiveEffect(new InTreeEffect());
+        host.Entity.GiveEffect(new InTreeEffect());
 
         PostMessage($"{host.PlayerName} climbed a tree.");
 

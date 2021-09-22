@@ -65,8 +65,11 @@
     <Compile Include="game_systems\activity\passive\ClimbTreeActivity.cs" />
     <Compile Include="game_systems\activity\passive\CreateCampfireActivity.cs" />
     <Compile Include="game_systems\activity\passive\FallFromTreeActivity.cs" />
-    <Compile Include="game_systems\activity\passive\SitAtCampfireEffect.cs" />
+    <Compile Include="game_systems\activity\passive\SitAtCampfireActivity.cs" />
+    <Compile Include="game_systems\EntityData.cs" />
     <Compile Include="game_systems\Game.cs" />
+    <Compile Include="game_systems\items\BaseItem.cs" />
+    <Compile Include="game_systems\items\weapons\SpearItem.cs" />
     <Compile Include="game_systems\map\Map.cs" />
     <Compile Include="game_systems\map\MapLocale.cs" />
     <Compile Include="game_systems\player\effect\BaseEffect.cs" />

@@ -8,17 +8,16 @@ public class MapLocale : GridContainer
 	public int[] Connections;
 
 	public List<MapLocale> ConnectedLocale { get; protected set; }
+	public EntityData Entity { get; protected set; }
 
 	List<Player> LocalPlayers;
-
-	List<BaseEffect> Effects;
 
 	public MapLocale()
 	{
 		ConnectedLocale = new List<MapLocale>();
 		LocalPlayers = new List<Player>();
 
-		Effects = new List<BaseEffect>();
+		Entity = new EntityData();
 	}
 
 	/// <summary>
@@ -71,50 +70,11 @@ public class MapLocale : GridContainer
 
 	public void ModifyActivityList(List<BaseActivity> possibles)
     {
-		int count = possibles.Count;
-		for (int x = 0; x < possibles.Count; x++)
-		{
-			foreach (var effect in Effects)
-			{
-				if (!effect.CanDoActivity(possibles[x]))
-					possibles.RemoveAt(x);
-
-				if (possibles.Count < count)
-					x -= count - possibles.Count;
-
-				count = possibles.Count;
-			}
-		}
-	}
-
-	public void GiveEffect(BaseEffect effect)
-	{
-		Effects.Add(effect);
-	}
-
-	public void LoseEffect(Type eType)
-	{
-		var effect = Effects.Find(x => x.GetType() == eType);
-		if (effect != null)
-			Effects.Remove(effect);
-	}
-
-	public bool HasEffect(Type effectType)
-	{
-		return Effects.Find(x => x.GetType() == effectType) != null;
+		Entity.ModifyActivityList(possibles);
 	}
 
 	public void ProcessTimeChange()
 	{
-		int count = Effects.Count;
-		for (int x = 0; x < Effects.Count; x++)
-		{
-			Effects[x].TickEffect();
-
-			if (Effects.Count < count)
-				x -= count - Effects.Count;
-
-			count = Effects.Count;
-		}
+		Entity.ProcessTimeChange();
 	}
 }

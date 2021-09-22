@@ -10,16 +10,15 @@ public class Player : Node2D
 	public string PlayerName { get; protected set; }
 	public int Team { get; protected set; }
 	public int Health { get; protected set; }
+	public EntityData Entity { get; protected set; }
 	public MapLocale CurrentLocale { get; protected set; }
 
 	Sprite Sprite;
 
-	List<BaseEffect> Effects;
-
 	public Player()
-	{
-		Effects = new List<BaseEffect>();
-	}
+    {
+		Entity = new EntityData();
+    }
 
 	public override void _Ready()
 	{
@@ -28,37 +27,14 @@ public class Player : Node2D
 
 	public void ProcessTimeChange()
     {
-		int count = Effects.Count;
-		for (int x = 0; x < Effects.Count; x++)
-		{
-			Effects[x].TickEffect();
-
-			if (Effects.Count < count)
-				x -= count - Effects.Count;
-
-			count = Effects.Count;
-		}
+		Entity.ProcessTimeChange();
 	}
 
 	public BaseActivity ChooseActivity()
 	{
 		var possibles = ActivityList.GetPossibleActivities(this);
 
-		int count = possibles.Count;
-		for(int x = 0; x < possibles.Count; x++)
-        {
-			foreach (var effect in Effects)
-			{
-				if (!effect.CanDoActivity(possibles[x]))
-					possibles.RemoveAt(x);
-
-				if(possibles.Count < count)
-					x -= count - possibles.Count;
-
-				count = possibles.Count;
-			}
-		}
-
+		Entity.ModifyActivityList(possibles);
 		CurrentLocale.ModifyActivityList(possibles);
 
 		if (possibles.Count <= 0)
@@ -97,24 +73,6 @@ public class Player : Node2D
 		{
 			EmitSignal("PlayerDied");
 		}
-	}
-
-	public void GiveEffect(BaseEffect effect)
-	{
-		Effects.Add(effect);
-		effect.Host = this;
-	}
-
-	public void LoseEffect(Type eType)
-    {
-		var effect = Effects.Find(x => x.GetType() == eType);
-		if (effect != null)
-			Effects.Remove(effect);
-    }
-
-	public bool HasEffect(Type effectType)
-	{
-		return Effects.Find(x => x.GetType() == effectType) != null;
 	}
 
 	public Vector2 GetSpriteSize()

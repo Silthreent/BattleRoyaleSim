@@ -2,10 +2,8 @@ using System.Reflection;
 
 public class BaseEffect
 {
-    public Player Host { get; set; }
-
     public virtual bool CanDoActivity(BaseActivity activity) { return true; }
-    public virtual void TickEffect() { }
+    public virtual void TickEffect(EntityData entity) { }
 
     protected bool CheckForTag(BaseActivity activity, string tag)
     {

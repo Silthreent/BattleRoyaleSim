@@ -5,7 +5,7 @@ public class LootLootboxActivity : BaseActivity
 {
     public override bool CanProcess(Player host)
     {
-        if (host.CurrentLocale.HasEffect(typeof(LootboxEffect)))
+        if (host.CurrentLocale.Entity.HasEffect(typeof(LootboxEffect)))
             return true;
 
         return false;

@@ -53,7 +53,7 @@ public class Game : Node2D
 			plyr.MoveTo(Map.CurrentMap.GetLocale(9));
 			plyr.Connect("PlayerDied", this, "OnPlayerDied", new Godot.Collections.Array() { plyr });
 			plyr.Modulate = new Color((100 * (teamCount % 2)) / 255f, (100 * (teamCount % 3)) / 255f, (100 * (teamCount % 4)) / 255f);
-			plyr.GiveEffect(new DoinOpenerEffect());
+			plyr.Entity.GiveEffect(new DoinOpenerEffect());
 			PlayerList.Add(plyr);
 
 			counter++;
@@ -69,7 +69,7 @@ public class Game : Node2D
 		UnprocessedPlayers = new List<Player>(PlayerList);
 		DayDeathList = new List<Player>();
 
-		Map.CurrentMap.GetLocale(9).GiveEffect(new LootboxEffect());
+		Map.CurrentMap.GetLocale(9).Entity.GiveEffect(new LootboxEffect());
 	}
 
 	/// <summary>
@@ -192,9 +192,9 @@ public class Game : Node2D
 				PostMessage("----End of Day----");
 
 				foreach(var x in PlayerList)
-                {
+				{
 					x.ProcessTimeChange();
-                }
+				}
 
 				foreach (var x in Map.CurrentMap.GetLocales())
 				{

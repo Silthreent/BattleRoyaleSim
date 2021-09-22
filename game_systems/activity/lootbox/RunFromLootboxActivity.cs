@@ -5,7 +5,7 @@ public class RunFromLootboxActivity : BaseActivity
 {
     public override bool CanProcess(Player host)
     {
-        if (host.HasEffect(typeof(DoinOpenerEffect)))
+        if (host.Entity.HasEffect(typeof(DoinOpenerEffect)))
             return true;
 
         return false;

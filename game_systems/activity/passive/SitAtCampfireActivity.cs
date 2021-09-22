@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 
 [Activity]
-public class SitAtCampfireEffect : BaseActivity
+public class SitAtCampfireActivity : BaseActivity
 {
     public override bool CanProcess(Player host)
     {
-        return host.CurrentLocale.HasEffect(typeof(CampfireEffect));
+        return host.CurrentLocale.Entity.HasEffect(typeof(CampfireEffect));
     }
 
     public override List<Player> Process(Player host)

@@ -1,14 +1,7 @@
 public class CampfireEffect : BaseEffect
 {
-    MapLocale CurrentLocale;
-
-    public CampfireEffect(MapLocale host)
+    public override void TickEffect(EntityData entity)
     {
-        CurrentLocale = host;
-    }
-
-    public override void TickEffect()
-    {
-        CurrentLocale.LoseEffect(typeof(CampfireEffect));
+        entity.LoseEffect(typeof(CampfireEffect));
     }
 }

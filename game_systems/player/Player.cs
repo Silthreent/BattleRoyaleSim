@@ -17,7 +17,7 @@ public class Player : Node2D
 
 	public Player()
     {
-		Entity = new EntityData();
+		Entity = new EntityData(this);
     }
 
 	public override void _Ready()

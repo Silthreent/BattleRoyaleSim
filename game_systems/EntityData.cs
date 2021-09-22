@@ -1,3 +1,4 @@
+using Godot;
 using System;
 using System.Collections.Generic;
 
@@ -8,10 +9,21 @@ public class EntityData
 	public Player HostPlayer { get; protected set; }
 	public MapLocale HostLocale { get; protected set; }
 
-	public EntityData()
+	protected EntityData()
 	{
 		Effects = new List<BaseEffect>();
 		Inventory = new List<BaseItem>();
+		Inventory.Add(new BowNArrowItem());
+	}
+
+	public EntityData(Player player) : this()
+    {
+		HostPlayer = player;
+    }
+
+	public EntityData(MapLocale locale) : this()
+	{
+		HostLocale = locale;
 	}
 
 	public void GiveEffect(BaseEffect effect)
@@ -60,6 +72,11 @@ public class EntityData
 		Inventory.Remove(item);
 	}
 
+	public bool HasItem(Type itemType)
+	{
+		return Inventory.Find(x => x.GetType() == itemType) != null;
+	}
+
 	public void ProcessOnInventory(Action<BaseItem> process)
 	{
 		int count = Inventory.Count;
@@ -74,8 +91,28 @@ public class EntityData
 		}
 	}
 
-	public void ModifyActivityList(List<BaseActivity> possibles)
+	public void ModifyActivityList(List<BaseActivity> possibles, bool countInventory = true)
     {
+		if (countInventory)
+		{
+			ProcessOnInventory(x =>
+			{
+				var acts = x.ModifyActivityList(this);
+
+				if (acts != null)
+				{
+					if (acts.Count > 0)
+					{
+						foreach (var act in acts)
+						{
+							possibles.Add(act);
+						}
+					}
+
+				}
+			});
+		}
+
 		int count = possibles.Count;
 		for (int x = 0; x < possibles.Count; x++)
 		{
@@ -94,15 +131,9 @@ public class EntityData
 
 	public void ProcessTimeChange()
 	{
-		int count = Effects.Count;
-		for (int x = 0; x < Effects.Count; x++)
+		ProcessOnEffects(x =>
 		{
-			Effects[x].TickEffect(this);
-
-			if (Effects.Count < count)
-				x -= count - Effects.Count;
-
-			count = Effects.Count;
-		}
+			x.TickEffect(this);
+		});
 	}
 }

@@ -17,7 +17,7 @@ public class MapLocale : GridContainer
 		ConnectedLocale = new List<MapLocale>();
 		LocalPlayers = new List<Player>();
 
-		Entity = new EntityData();
+		Entity = new EntityData(this);
 	}
 
 	/// <summary>
@@ -70,7 +70,7 @@ public class MapLocale : GridContainer
 
 	public void ModifyActivityList(List<BaseActivity> possibles)
     {
-		Entity.ModifyActivityList(possibles);
+		Entity.ModifyActivityList(possibles, false);
 	}
 
 	public void ProcessTimeChange()

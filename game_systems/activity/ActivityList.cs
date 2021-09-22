@@ -1,6 +1,8 @@
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 public static class ActivityList
 {
@@ -31,7 +33,12 @@ public static class ActivityList
     public static List<BaseActivity> GetPossibleActivities(Player player)
     {
         return Activities
-            .Where(x => x.CanProcess(player))
+            .Where(x => !x.GetType().GetCustomAttribute<ActivityAttribute>().HasTag("item") && x.CanProcess(player))
             .ToList();
+    }
+
+    public static T GetActivity<T>() where T : BaseActivity
+    {
+        return (T)Activities.Find(x => x.GetType() == typeof(T));
     }
 }

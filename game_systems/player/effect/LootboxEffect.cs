@@ -10,7 +10,10 @@ public class LootboxEffect : BaseEffect
         {
             new SpearItem(),
             new SpearItem(),
-            new SpearItem()
+            new SpearItem(),
+
+            new BowNArrowItem(),
+            new BowNArrowItem()
         };
     }
 

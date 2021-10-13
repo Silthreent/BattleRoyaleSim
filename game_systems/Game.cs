@@ -92,9 +92,10 @@ public class Game : Node2D
 
 		var chosenPlayer = UnprocessedPlayers[RNG.Next(0, UnprocessedPlayers.Count)];
 
-		GD.Print($"Doing Activity: {chosenPlayer.PlayerName}");
 
 		var activity = chosenPlayer.ChooseActivity();
+
+		GD.Print($"Doing {activity.GetType()}: {chosenPlayer.PlayerName}");
 
 		// Any players related to the activity done also can't do anything today
 		var involvedPlayers = activity.Process(chosenPlayer);

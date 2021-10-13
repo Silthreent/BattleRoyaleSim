@@ -169,7 +169,7 @@ public class Game : Node2D
 
 		for (int x = 0; x < PlayerList.Count; x++)
 		{
-			if (PlayerList[x].Health < 0)
+			if (PlayerList[x].Health <= 0)
 				continue;
 
 			var label = new Label();

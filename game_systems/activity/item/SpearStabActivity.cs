@@ -10,7 +10,7 @@ public class SpearStabActivity : BaseActivity
 
     public override List<Player> Process(Player host)
     {
-        var alive = host.CurrentLocale.GetLocalAlive().FindAll(x => x.Health >= 0 && x != host && x.Team != host.Team);
+        var alive = host.CurrentLocale.GetLocalAlive().FindAll(x => x != host && x.Team != host.Team);
         if (alive.Count <= 0)
         {
             Game.CurrentGame.PostMessage($"{host.PlayerName} looked to stab with their spear, but couldn't find anyone.");
@@ -33,6 +33,6 @@ public class SpearStabActivity : BaseActivity
             Game.CurrentGame.PostMessage($"{host.Name} tried to stab {sacrifice.Name} with their spear but missed.");
         }
 
-        return new List<Player>() { sacrifice };
+        return new List<Player>();
     }
 }

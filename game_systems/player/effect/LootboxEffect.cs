@@ -15,7 +15,9 @@ public class LootboxEffect : BaseEffect
             new BowNArrowItem(),
             new BowNArrowItem(),
 
-            new SwordItem()
+            new SwordItem(),
+
+            new ExplosiveItem()
         };
     }
 

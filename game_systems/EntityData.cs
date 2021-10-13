@@ -71,6 +71,11 @@ public class EntityData
 		Inventory.Remove(item);
 	}
 
+	public void LoseItem<T>() where T : BaseItem
+    {
+		Inventory.Remove(Inventory.Find(x => x.GetType() == typeof(T)));
+    }
+
 	public bool HasItem<T>()
 	{
 		return Inventory.Find(x => x.GetType() == typeof(T)) != null;

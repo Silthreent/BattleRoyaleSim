@@ -9,7 +9,7 @@ public class Player : Node2D
 
 	public string PlayerName { get; protected set; }
 	public int Team { get; protected set; }
-	public int Health { get; protected set; }
+	public int Health { get; protected set; } = 1;
 	public EntityData Entity { get; protected set; }
 	public MapLocale CurrentLocale { get; protected set; }
 

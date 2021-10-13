@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class MapLocale : GridContainer
 {
@@ -60,7 +61,7 @@ public class MapLocale : GridContainer
 
 	public List<Player> GetLocalPlayers()
 	{
-		return new List<Player>(LocalPlayers);
+		return LocalPlayers.Where(x => x.Health > 0).ToList();
 	}
 
 	public int GetLocalPlayerCount()

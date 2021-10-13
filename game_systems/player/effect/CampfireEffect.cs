@@ -1,7 +1,14 @@
 public class CampfireEffect : BaseEffect
 {
-    public override void TickEffect(EntityData entity)
-    {
-        entity.LoseEffect(typeof(CampfireEffect));
-    }
+	public Player Host;
+
+	public CampfireEffect(Player host)
+	{
+		Host = host;
+	}
+
+	public override void TickEffect(EntityData entity)
+	{
+		entity.LoseEffect<CampfireEffect>();
+	}
 }

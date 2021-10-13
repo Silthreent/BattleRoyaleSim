@@ -30,16 +30,16 @@ public class EntityData
 		Effects.Add(effect);
 	}
 
-	public void LoseEffect(Type eType)
+	public void LoseEffect<T>() where T : BaseEffect
 	{
-		var effect = Effects.Find(x => x.GetType() == eType);
+		var effect = Effects.Find(x => x.GetType() == typeof(T));
 		if (effect != null)
 			Effects.Remove(effect);
 	}
 
-	public bool HasEffect(Type effectType)
+	public bool HasEffect<T>() where T : BaseEffect
 	{
-		return Effects.Find(x => x.GetType() == effectType) != null;
+		return Effects.Find(x => x.GetType() == typeof(T)) != null;
 	}
 
 	public void ProcessOnEffects(Action<BaseEffect> process)
@@ -71,9 +71,9 @@ public class EntityData
 		Inventory.Remove(item);
 	}
 
-	public bool HasItem(Type itemType)
+	public bool HasItem<T>()
 	{
-		return Inventory.Find(x => x.GetType() == itemType) != null;
+		return Inventory.Find(x => x.GetType() == typeof(T)) != null;
 	}
 
 	public void ProcessOnInventory(Action<BaseItem> process)

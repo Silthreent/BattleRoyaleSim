@@ -56,6 +56,7 @@
     <Compile Include="game_systems\activity\ActivityList.cs" />
     <Compile Include="game_systems\activity\aggressive\AttackActivity.cs" />
     <Compile Include="game_systems\activity\BaseActivity.cs" />
+    <Compile Include="game_systems\activity\gather\LootAreaActivity.cs" />
     <Compile Include="game_systems\activity\item\ShootBowActivity.cs" />
     <Compile Include="game_systems\activity\item\SpearStabActivity.cs" />
     <Compile Include="game_systems\activity\KillActivity.cs" />

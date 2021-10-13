@@ -82,6 +82,8 @@ public class Player : Node2D
 		if(Health <= 0)
 		{
 			EmitSignal("PlayerDied");
+
+			Sprite.Visible = false;
 		}
 	}
 

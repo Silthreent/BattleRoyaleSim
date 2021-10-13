@@ -13,7 +13,7 @@ public class AttackActivity : BaseActivity
 
     public override List<Player> Process(Player host)
     {
-        var alive = host.CurrentLocale.GetLocalPlayers().FindAll(x => x.Health >= 0 && x != host && x.Team != host.Team);
+        var alive = host.CurrentLocale.GetLocalAlive().FindAll(x => x.Health >= 0 && x != host && x.Team != host.Team);
         if (alive.Count <= 0)
         {
             Game.CurrentGame.PostMessage($"{host.Name} was blood thirsty, but couldn't find anyone.");

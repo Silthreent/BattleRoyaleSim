@@ -17,7 +17,7 @@ public abstract class BaseActivity
 
     protected bool HasNearbyEnemies(Player host, int amount)
     {
-        if(host.CurrentLocale.GetLocalPlayers().FindAll(x => x.Team != host.Team).Count >= amount)
+        if(host.CurrentLocale.GetLocalAlive().FindAll(x => x.Team != host.Team).Count >= amount)
             return true;
 
         return false;

@@ -59,10 +59,23 @@ public class MapLocale : GridContainer
 		LocalPlayers.Remove(player);
 	}
 
-	public List<Player> GetLocalPlayers()
+	/// <summary>
+	/// Get all alive players at this location.
+	/// </summary>
+	/// <returns></returns>
+	public List<Player> GetLocalAlive()
 	{
 		return LocalPlayers.Where(x => x.Health > 0).ToList();
 	}
+
+	/// <summary>
+	/// Get _all_ nearby players. Includes both alive and dead.
+	/// </summary>
+	/// <returns></returns>
+	public List<Player> GetLocalPlayers()
+    {
+		return new List<Player>(LocalPlayers);
+    }
 
 	public int GetLocalPlayerCount()
     {

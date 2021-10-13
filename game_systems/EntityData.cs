@@ -13,7 +13,6 @@ public class EntityData
 	{
 		Effects = new List<BaseEffect>();
 		Inventory = new List<BaseItem>();
-		Inventory.Add(new BowNArrowItem());
 	}
 
 	public EntityData(Player player) : this()

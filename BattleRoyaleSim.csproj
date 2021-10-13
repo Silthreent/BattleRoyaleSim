@@ -73,6 +73,7 @@
     <Compile Include="game_systems\items\BaseItem.cs" />
     <Compile Include="game_systems\items\weapons\BowNArrowItem.cs" />
     <Compile Include="game_systems\items\weapons\SpearItem.cs" />
+    <Compile Include="game_systems\items\weapons\SwordItem.cs" />
     <Compile Include="game_systems\map\Map.cs" />
     <Compile Include="game_systems\map\MapLocale.cs" />
     <Compile Include="game_systems\player\effect\BaseEffect.cs" />

@@ -69,6 +69,7 @@
     <Compile Include="game_systems\activity\passive\ClimbTreeActivity.cs" />
     <Compile Include="game_systems\activity\passive\CreateCampfireActivity.cs" />
     <Compile Include="game_systems\activity\passive\FallFromTreeActivity.cs" />
+    <Compile Include="game_systems\activity\passive\MournLossActivity.cs" />
     <Compile Include="game_systems\activity\passive\SitAtCampfireActivity.cs" />
     <Compile Include="game_systems\EntityData.cs" />
     <Compile Include="game_systems\Game.cs" />

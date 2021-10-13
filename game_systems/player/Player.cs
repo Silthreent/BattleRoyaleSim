@@ -37,6 +37,8 @@ public class Player : Node2D
 		Entity.ModifyActivityList(possibles);
 		CurrentLocale.ModifyActivityList(possibles);
 
+		GD.Print($"Possible Activities: {possibles.Count}");
+
 		if (possibles.Count <= 0)
 			return new NoOptionActivity();
 

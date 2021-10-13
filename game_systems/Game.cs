@@ -86,13 +86,17 @@ public class Game : Node2D
 		MessageLog.MoveChild(label, 0);
 	}
 
+	public List<Player> GetPlayers()
+    {
+		return new List<Player>(PlayerList);
+    }
+
 	// Pick a random adventurer who hasn't done anything today, and have them do something
 	void ProcessRandomActivity()
 	{
-		GD.Print("--Processing day--");
+		GD.Print("--Processing Activity--");
 
 		var chosenPlayer = UnprocessedPlayers[RNG.Next(0, UnprocessedPlayers.Count)];
-
 
 		var activity = chosenPlayer.ChooseActivity();
 
